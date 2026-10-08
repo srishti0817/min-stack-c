@@ -1,0 +1,31 @@
+﻿#include <stdio.h>
+#define MAX 100
+
+typedef struct {
+    int mainStack[MAX];
+    int minStack[MAX];
+    int top;
+} MinStack;
+
+void init(MinStack *s) { s->top = -1; }
+
+void push(MinStack *s, int val) {
+    if (s->top == MAX - 1) return;
+    s->top++;
+    s->mainStack[s->top] = val;
+    if (s->top == 0 || val <= s->minStack[s->top - 1]) {
+        s->minStack[s->top] = val;
+    } else {
+        s->minStack[s->top] = s->minStack[s->top - 1];
+    }
+}
+
+int pop(MinStack *s) {
+    if (s->top == -1) return -1;
+    return s->mainStack[(s->top)--];
+}
+
+int getMin(MinStack *s) {
+    if (s->top == -1) return -1;
+    return s->minStack[s->top];
+}
